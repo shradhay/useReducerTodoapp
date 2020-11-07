@@ -1,19 +1,41 @@
 import React ,{useState,useReducer}from "react"
 import './App.css';
-const ACTIONS={
-  ADDTODO : "addtodo"
+import Todo from "./Todo"
+export const ACTIONS={
+  ADD_TODO : "addtodo",
+  TOOGLE_TODO :"toogletodo"
 }
 
-function reducer(state,action){
+function reducer(todos,action){
 
   switch (action.type) {
-    case ACTIONS.ADDTODO:
-      return [...todos,newTodo(name)]
-      break;
+    case ACTIONS.ADD_TODO:
+      return [...todos,newTodo(action.payload.name)]
+    
+      case ACTIONS.TOOGLE_TODO:
+        return todos.map(todo=>{
+          if(todo.id == action.payload.id)
+          {
+            return {...todo,complete:!todo.complete}
+          }
+          return todo
+        })
+
+        
+      case ACTIONS.DELETE_TODO:
+        return todos.filter(todo=> todo.id !==action.payload.id)
+      
+
+       
   
     default:
-      break;
+      return todos;
   }
+
+}
+function newTodo(name){
+
+  return {id:Date.now(),name:name,complete:false}
 
 }
 
@@ -22,21 +44,36 @@ function App() {
   const [todos, dispatch] = useReducer(reducer,[])
   const [name, setName] = useState('')
 
-  const handlesubmit=()=>{
-    dispatch({type:ACTIONS.ADDTODO})
+  const handlesubmit=(e)=>{
+    e.preventDefault();
+    dispatch({type:ACTIONS.ADD_TODO,payload:{name:name}})
   }
+  
   return (
     <div className="App">
       <form onSubmit={handlesubmit}>
         <input
+        type="text"
         onChange={(e)=>{
           setName(e.target.value);
 
         }}
-        value={todo}
+        value={name}
 
         
         />
+
+        {todos.map((todo)=>{
+          return(
+            <Todo
+            key={todo.id}
+            todo={todo}
+            dispatch={dispatch}
+            
+            />
+          )
+
+        })}
 
 
 
