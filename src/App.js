@@ -3,7 +3,8 @@ import './App.css';
 import Todo from "./Todo"
 export const ACTIONS={
   ADD_TODO : "addtodo",
-  TOOGLE_TODO :"toogletodo"
+  TOOGLE_TODO :"toogletodo",
+  DELETE_TODO : "deletetodo"
 }
 
 function reducer(todos,action){
@@ -11,15 +12,18 @@ function reducer(todos,action){
   switch (action.type) {
     case ACTIONS.ADD_TODO:
       return [...todos,newTodo(action.payload.name)]
+
+      
     
       case ACTIONS.TOOGLE_TODO:
         return todos.map(todo=>{
-          if(todo.id == action.payload.id)
+          if(todo.id === action.payload.id)
           {
             return {...todo,complete:!todo.complete}
           }
           return todo
         })
+       
 
         
       case ACTIONS.DELETE_TODO:
@@ -47,6 +51,7 @@ function App() {
   const handlesubmit=(e)=>{
     e.preventDefault();
     dispatch({type:ACTIONS.ADD_TODO,payload:{name:name}})
+    setName("")
   }
   
   return (
@@ -63,7 +68,12 @@ function App() {
         
         />
 
-        {todos.map((todo)=>{
+       
+
+
+
+      </form>
+      {todos.map((todo)=>{
           return(
             <Todo
             key={todo.id}
@@ -74,10 +84,6 @@ function App() {
           )
 
         })}
-
-
-
-      </form>
     
     </div>
   );

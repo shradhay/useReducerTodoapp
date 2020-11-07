@@ -5,7 +5,7 @@ function Todo({todo,dispatch}) {
     return (
         <div>
             <span
-            style={{color: todo.complete ? '#AAAA' :'#000'}}
+            style={{color: todo.complete ? '#45CE30' :'#E8290B'}}
             >{todo.name}</span>
             <button
             onClick={()=>{
