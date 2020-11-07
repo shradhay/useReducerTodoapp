@@ -57,6 +57,7 @@ function App() {
   return (
     <div className="App">
       <form onSubmit={handlesubmit}>
+        <h1>Todo App</h1>
         <input
         type="text"
         onChange={(e)=>{
@@ -64,6 +65,7 @@ function App() {
 
         }}
         value={name}
+        placeholder="Enter your todo here..."
 
         
         />
