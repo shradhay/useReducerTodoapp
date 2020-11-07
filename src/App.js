@@ -1,23 +1,47 @@
-import logo from './logo.svg';
+import React ,{useState,useReducer}from "react"
 import './App.css';
+const ACTIONS={
+  ADDTODO : "addtodo"
+}
+
+function reducer(state,action){
+
+  switch (action.type) {
+    case ACTIONS.ADDTODO:
+      return [...todos,newTodo(name)]
+      break;
+  
+    default:
+      break;
+  }
+
+}
 
 function App() {
+
+  const [todos, dispatch] = useReducer(reducer,[])
+  const [name, setName] = useState('')
+
+  const handlesubmit=()=>{
+    dispatch({type:ACTIONS.ADDTODO})
+  }
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <form onSubmit={handlesubmit}>
+        <input
+        onChange={(e)=>{
+          setName(e.target.value);
+
+        }}
+        value={todo}
+
+        
+        />
+
+
+
+      </form>
+    
     </div>
   );
 }
